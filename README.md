@@ -1,3 +1,50 @@
+# Sorsogon Province Budget Transparency Portal
+
+An independent, non-government civic initiative presenting published budget proposals and enacted appropriations relevant to Sorsogon Province, Philippines.
+
+This repository is a Sorsogon-specific fork of [BetterGov.PH's transparency-portal](https://github.com/bettergovph/transparency-portal), licensed under MIT. Credit for the upstream application and its Budget API belongs to BetterGov.PH and the original contributors. This fork is **not an official website of the Provincial Government of Sorsogon or DPWH**, and it does not imply endorsement by the upstream maintainers.
+
+## Sorsogon configuration and data limitations
+
+- **Scope:** Sorsogon Province (Region V), with the Sorsogon District Engineering Office, Sorsogon 2nd District Engineering Office, and the province's two legislative districts.
+- **FY2027:** Compare the National Expenditure Program and House bill as two versions of proposed appropriations. These figures are **not actual disbursements**, and the two versions must not be added together.
+- **FY2020–2026:** Show enacted General Appropriations Act program amounts as appropriations, not actual spending.
+- **Geographic limitations:** An office assignment or a project title mentioning Sorsogon is not authoritative evidence that a project is physically located in a specific municipality or barangay. Place-name matches and uncertain project pairings require individual verification.
+- **Source:** The public [BetterGov.PH Budget API](https://budget.bettergov.ph/docs). The API provides the data and its source-document references. The portal does not operate an independent budget database.
+- **Citizen reports:** Not enabled until the upstream reporting service is available. No project reports are collected by this fork.
+
+## Development and validation
+
+The configuration is being reviewed on branch `configure-sorsogon-province`. The `main` branch remains unchanged until a separately approved merge.
+
+```bash
+git clone -b configure-sorsogon-province https://github.com/jill1214/sorsogon-province-transparency-portal.git
+cd sorsogon-province-transparency-portal
+npm ci
+npm run test:csv
+npm run check -- --verbose
+npm run lint
+npm run build
+npm run dev
+```
+
+The build requires Node.js 22. A protected Vercel Preview is available for authorized review; a public production deployment has not been approved.
+
+## Changes maintained in this fork
+
+- Province-specific scope in `portal.config.ts`.
+- Branch-restricted GitHub Actions validation and read-only dependency audit.
+- CSV export formula neutralization for both FY2027 projects and historical GAA programs, with regression tests.
+- Node.js version consistency for repeatable builds.
+
+These changes belong to this fork only. They are not submitted to the upstream repository unless a separate pull request is explicitly approved.
+
+---
+
+## Original BetterGov.PH starter documentation
+
+The following upstream material is retained for reference. Its Bohol examples, deployment links, poster, and `npm run setup` instructions describe the **original reusable starter**, not the Sorsogon configuration above.
+
 # Transparency Portal
 
 A small, forkable website that shows citizens **every FY 2027 budget project** for one
