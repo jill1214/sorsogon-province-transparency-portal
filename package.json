@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "deploy:cloudflare": "npm run build && wrangler deploy",
-    "build:poster": "tsx scripts/build-poster.ts"
+    "build:poster": "tsx scripts/build-poster.ts",
+    "test:csv": "tsx --test src/lib/csv.test.ts"
   },
   "dependencies": {
     "react": "^19.2.5",
@@ -38,6 +39,6 @@
     "wrangler": "^4.92.0"
   },
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": "22.x"
   }
 }
