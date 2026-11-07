@@ -25,7 +25,8 @@ const LAST = GAA_YEARS[GAA_YEARS.length - 1];
 export default function Enacted() {
   const { config, client, districts } = usePortal();
   const name = shortNameOf(config);
-  useTitle(`Enacted budgets ${FIRST}–${LAST} · ${name}`);
+  useTitle(`Enacted budgets ${FIRST}–${LAST} · ${name}`,
+    'Explore enacted FY2020–2026 budget appropriations associated with Sorsogon Province. Appropriations are not actual spending.');
   const places = config.scope.places ?? [];
 
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
