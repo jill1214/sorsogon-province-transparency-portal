@@ -30,6 +30,9 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Test CSV formula protection and exports
+        run: npm run test:csv
+
       - name: Verify Sorsogon scope against live Budget API
         run: npm run check -- --verbose
 
