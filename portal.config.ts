@@ -13,6 +13,7 @@ export default defineConfig({
   kind: 'province',
   name: 'Province of Sorsogon',
   shortName: 'Sorsogon',
+  siteUrl: 'https://sorsogon-province-transparency-portal.vercel.app/',
   operator: { name: 'Independent Civic Initiative' },
   scope: {
     offices: [
