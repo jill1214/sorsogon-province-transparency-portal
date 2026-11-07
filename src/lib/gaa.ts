@@ -22,6 +22,7 @@ import type { Exclusion, PortalConfig } from '../config';
 import type { Client } from '../api/client';
 import type { GaaDepartment, GaaProgram } from '../api/types';
 import { GAA_YEARS } from '../api/types';
+import { csvCell } from './csv-cell';
 
 export interface GaaRow extends GaaProgram {
   /** `gaa:<fam_key>`, the key exclusions use. */
@@ -165,10 +166,6 @@ export function gaaYearTotals(rows: readonly GaaProgram[]): GaaYearTotal[] {
 
 /** Every GAA row as one CSV: a column per year, exact pesos. */
 export function gaaCsv(rows: readonly GaaRow[]): string {
-  const cell = (v: string | number) => {
-    const s = String(v);
-    return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  };
   const head = ['department', 'agency_id', 'name', ...GAA_YEARS.map((y) => `gaa_${y}_php`), 'names', 'family_key'];
   const lines = [head.join(',')];
   for (const r of rows) {
@@ -180,7 +177,7 @@ export function gaaCsv(rows: readonly GaaRow[]): string {
         ...GAA_YEARS.map((y) => (hasYear(r, y) ? r.years[String(y)].amount : '')),
         r.reasons.join('; '),
         r.fam_key,
-      ].map(cell).join(','),
+      ].map(csvCell).join(','),
     );
   }
   return lines.join('\r\n') + '\r\n';
