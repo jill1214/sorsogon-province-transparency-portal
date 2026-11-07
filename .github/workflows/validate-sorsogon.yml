@@ -1,0 +1,40 @@
+name: Sorsogon Portal Validation
+
+on:
+  push:
+    branches:
+      - configure-sorsogon-province
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sorsogon-portal-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate configuration, lint and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out review branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify Sorsogon scope against live Budget API
+        run: npm run check -- --verbose
+
+      - name: Lint source
+        run: npm run lint
+
+      - name: Build static portal
+        run: npm run build
