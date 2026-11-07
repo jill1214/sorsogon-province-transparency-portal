@@ -38,3 +38,53 @@ jobs:
 
       - name: Build static portal
         run: npm run build
+
+  dependency-audit:
+    name: Read-only dependency security audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out review branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Audit locked dependencies without applying fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          for scope in all production; do
+            report="$(mktemp)"
+            audit_args=(--json)
+            if [ "$scope" = production ]; then audit_args=(--omit=dev --json); fi
+            status=0
+            npm audit "${audit_args[@]}" > "$report" || status=$?
+            node - "$report" "$scope" "$status" <<'NODE'
+          const fs = require('node:fs');
+          const [file, scope, exitStatus] = process.argv.slice(2);
+          let audit;
+          try { audit = JSON.parse(fs.readFileSync(file, 'utf8')); }
+          catch { console.error('Invalid audit JSON for', scope); process.exit(1); }
+          if (!audit.metadata?.vulnerabilities || !audit.vulnerabilities || Number(exitStatus) > 1 || audit.error) {
+            console.error('npm audit failed:', scope, 'exit status', exitStatus, audit.error?.code || 'missing report');
+            process.exit(1);
+          }
+          console.log('\n=== ' + scope.toUpperCase() + ' dependency audit ===');
+          console.log('Counts:', JSON.stringify(audit.metadata.vulnerabilities));
+          for (const [name, issue] of Object.entries(audit.vulnerabilities).sort(([a], [b]) => a.localeCompare(b))) {
+            const advisories = (issue.via || []).filter(v => typeof v === 'object').map(v => ({
+              title: v.title, url: v.url, range: v.range
+            }));
+            console.log(JSON.stringify({
+              package: name, severity: issue.severity, direct: issue.isDirect,
+              vulnerableRange: issue.range, fixAvailable: issue.fixAvailable,
+              paths: issue.nodes, affects: issue.effects, advisories
+            }));
+          }
+          NODE
+            rm -f "$report"
+          done
