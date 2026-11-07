@@ -1,32 +1,26 @@
 /**
- * This portal's configuration: the only file a fork needs to edit.
- * What each field means: src/config.ts. Generate one with `npm run setup`;
- * check it against the live API with `npm run check`.
+ * Sorsogon Province FY2027 budget transparency portal.
+ * Based on the BetterGov.PH public Budget API.
  *
- * This default is a worked example: the Province of Bohol. Its three DPWH
- * district engineering offices bring in every DPWH line listed under them;
- * the place name brings in lines from all four programs whose title names
- * Bohol (Central Office projects, farm-to-market roads, health facilities,
- * irrigation). More examples in examples/.
+ * DPWH offices and legislative districts were verified against the live API.
+ * Office coverage is not proof of project-level municipal or barangay location.
+ * Validate against the live API with `npm run check` before deployment.
  */
 import { defineConfig } from './src/config';
 
 export default defineConfig({
-  id: 'bohol-province',
+  id: 'sorsogon-province',
   kind: 'province',
-  name: 'Province of Bohol',
-  shortName: 'Bohol',
-  operator: { name: 'BetterGov.ph', url: 'https://bettergov.ph' },
-  // Where this example is deployed. Change it (or remove it) in your fork.
-  siteUrl: 'https://transparency-portal.bettergov.workers.dev',
+  name: 'Province of Sorsogon',
+  shortName: 'Sorsogon',
+  operator: { name: 'Independent Civic Initiative' },
   scope: {
     offices: [
-      'Bohol 1st District Engineering Office',
-      'Bohol 2nd District Engineering Office',
-      'Bohol 3rd District Engineering Office',
+      'Sorsogon District Engineering Office',
+      'Sorsogon 2nd District Engineering Office',
     ],
-    places: [{ label: 'Bohol', region: 'VII' }],
-    districts: ['leg:bohol:1st', 'leg:bohol:2nd', 'leg:bohol:3rd'],
+    places: [{ label: 'Sorsogon', q: 'Sorsogon', region: 'V' }],
+    districts: ['leg:sorsogon:1st', 'leg:sorsogon:2nd'],
     exclude: [],
   },
   reporting: { enabled: false },

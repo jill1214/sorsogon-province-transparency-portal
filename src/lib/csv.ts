@@ -3,6 +3,7 @@
  * page links, so anyone can check the list without this site.
  */
 import type { ScopedProject } from './scope';
+import { csvCell } from './csv-cell';
 
 const COLUMNS: [string, (p: ScopedProject) => string | number | null][] = [
   ['program', (p) => p.dataset],
@@ -24,15 +25,9 @@ const COLUMNS: [string, (p: ScopedProject) => string | number | null][] = [
   ['url', (p) => p.url],
 ];
 
-function cell(v: string | number | null): string {
-  if (v == null) return '';
-  const s = String(v);
-  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
-
 export function projectsCsv(projects: readonly ScopedProject[]): string {
   const lines = [COLUMNS.map(([h]) => h).join(',')];
-  for (const p of projects) lines.push(COLUMNS.map(([, f]) => cell(f(p))).join(','));
+  for (const p of projects) lines.push(COLUMNS.map(([, f]) => csvCell(f(p))).join(','));
   return lines.join('\r\n') + '\r\n';
 }
 
