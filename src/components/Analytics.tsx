@@ -65,7 +65,7 @@ export default function Analytics() {
     setShowChoices(false);
   }
 
-  if (!showChoices || !canTrack(window.location.hostname, 'accepted')) return null;
+  if (!showChoices) return null;
 
   return (
     <section className="analytics-consent" aria-label="Analytics privacy preferences">
