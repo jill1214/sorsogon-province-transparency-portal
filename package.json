@@ -9,7 +9,7 @@
     "dev": "vite",
     "setup": "tsx scripts/setup.ts",
     "check": "tsx scripts/check.ts",
-    "build": "tsc -b && vite build && node scripts/seo-pages.mjs",
+    "build": "tsc -b && vite build && node scripts/seo-pages.mjs && tsx scripts/seo-projects.ts",
     "preview": "vite preview",
     "lint": "eslint .",
     "deploy:cloudflare": "npm run build && wrangler deploy",
