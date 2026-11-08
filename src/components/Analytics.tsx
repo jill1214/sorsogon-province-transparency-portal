@@ -20,7 +20,7 @@ export default function Analytics() {
     const onClick = (event: MouseEvent) => {
       if (!(event.target instanceof Element)) return;
       const anchor = event.target.closest('a[href]');
-      if (anchor) trackSourceClick(anchor.href);
+      if (anchor instanceof HTMLAnchorElement) trackSourceClick(anchor.href);
     };
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);
