@@ -13,6 +13,7 @@ import { shortNameOf } from '../config';
 import { Await, Disclaimers, External } from '../components/Bits';
 import { PageHead } from '../components/Chrome';
 import { downloadText } from '../lib/csv';
+import { trackEvent } from '../lib/analytics';
 import { count, php, phpFull, plural } from '../lib/format';
 import { departmentShort, gaaCsv, gaaYearTotals, hasYear, loadGaa, type GaaResult, type GaaRow } from '../lib/gaa';
 import { usePortal, type Async } from '../lib/portal-context';
@@ -205,6 +206,7 @@ function Programs({ result, placeList }: { result: GaaResult; placeList: string 
     else next.delete(key);
     setParams(next, { replace: true });
     setShown(PAGE);
+    if (key !== 'q') trackEvent('filter_projects', { section: 'enacted', filter_type: key });
   };
 
   const departments = useMemo(() => {
@@ -268,7 +270,7 @@ function Programs({ result, placeList }: { result: GaaResult; placeList: string 
         <div className="toolbar">
           <label className="field field-grow">
             <span className="label">Search</span>
-            <input type="search" value={q} placeholder="Road, school, barangay, agency…" onChange={(e) => setParam('q', e.target.value)} />
+            <input type="search" value={q} placeholder="Road, school, barangay, agency…" onChange={(e) => setParam('q', e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && q.trim()) trackEvent('search', { section: 'enacted' }); }} />
           </label>
           <label className="field">
             <span className="label">Department</span>

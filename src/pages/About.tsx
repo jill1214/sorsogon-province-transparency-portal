@@ -35,6 +35,37 @@ export default function About() {
           </Await>
         )}
       </Await>
+      <section className="section" id="analytics-privacy" aria-labelledby="analytics-privacy-h">
+        <h2 id="analytics-privacy-h" className="section-h">Analytics and privacy</h2>
+        <p>
+          This is an independently administered Sorsogon Province budget portal, operated as the
+          Independent Civic Initiative. It offers optional Google Analytics 4 (GA4) to understand
+          overall traffic, project page visits, filtering, search activity, CSV download attempts,
+          and clicks to BetterGov.ph source records. Analytics is not necessary to use the portal.
+        </p>
+        <p>
+          Google Analytics is loaded only if you select <strong>Accept analytics</strong>. Google may
+          process browser and device information, approximate location, interactions, cookies,
+          and online identifiers as an analytics provider. The portal's custom events do not send
+          typed search terms, arbitrary search/filter query parameters, or citizen reports. GA4
+          data is subject to Google's processing and the property's retention settings.
+          Budget records themselves come from the separately operated BetterGov.ph API.
+        </p>
+        <p>
+          You can decline analytics and continue using the site. To change your preference,
+          select <strong>Analytics preferences</strong> in the footer. Withdrawing consent stops
+          further portal analytics collection on this browser and attempts to clear the site's
+          Google Analytics cookies. Previously collected data cannot be withdrawn automatically.
+          Your choice is stored in this browser until you change it or clear site storage.
+          See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a>.
+        </p>
+        <p className="fine">
+          For privacy inquiries and data-rights requests, contact this independent portal's administrator
+          at <a href="mailto:budget.transparency.portal4700@gmail.com">budget.transparency.portal4700@gmail.com</a>.
+          This is not an official website of the Provincial Government of Sorsogon or any government agency.
+          Do not submit personal information in public project repositories.
+        </p>
+      </section>
     </main>
   );
 }

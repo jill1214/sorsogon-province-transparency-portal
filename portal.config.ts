@@ -14,7 +14,7 @@ export default defineConfig({
   name: 'Province of Sorsogon',
   shortName: 'Sorsogon',
   siteUrl: 'https://sorsogon-province-transparency-portal.vercel.app/',
-  operator: { name: 'Independent Civic Initiative' },
+  operator: { name: 'Independent Civic Initiative', email: 'budget.transparency.portal4700@gmail.com' },
   scope: {
     offices: [
       'Sorsogon District Engineering Office',

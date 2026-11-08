@@ -131,6 +131,7 @@ export function Footer() {
             <a href={SORSOGON_SOURCE_URL} target="_blank" rel="noopener">View this independent local adaptation ↗</a>
           </li>
         </ul>
+      <p className="footer-analytics"><Link to="/about#analytics-privacy">Analytics and privacy</Link> · <button type="button" className="footer-preferences" onClick={() => window.dispatchEvent(new Event('spt:open-analytics-preferences'))}>Analytics preferences</button></p>
       </div>
     </footer>
   );
