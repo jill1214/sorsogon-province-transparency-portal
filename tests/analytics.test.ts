@@ -35,3 +35,26 @@ test('page tracking strips query strings and fragments', () => {
   assert.equal(safePagePath('/projects/dpwh/example'), '/projects/dpwh/example');
   assert.equal(safePagePath('https://invalid.example/'), '/');
 });
+
+
+test('tag initialization is blocked when permission is absent, declined, or in Preview', async () => {
+  const { startAnalytics, PRODUCTION_HOST } = await import('../src/lib/analytics');
+  const prior = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  try {
+    for (const [host, stored] of [
+      [PRODUCTION_HOST, null],
+      [PRODUCTION_HOST, 'declined'],
+      ['sorsogon-province-transparency-portal-hvvivswk8-amabini.vercel.app', 'accepted'],
+    ] as const) {
+      Object.defineProperty(globalThis, 'window', {
+        configurable: true,
+        value: { location: { hostname: host }, localStorage: { getItem: () => stored } },
+      });
+      // No mocked document exists: accessing it would throw. No script is inserted.
+      assert.equal(startAnalytics(), false);
+    }
+  } finally {
+    if (prior) Object.defineProperty(globalThis, 'window', prior);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
