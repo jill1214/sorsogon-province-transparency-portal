@@ -47,7 +47,7 @@ The tag is inserted only after React starts on the exact public host. Static SEO
 The website now includes an optional analytics accept/decline control and a privacy section at `/about#analytics-privacy`. GA4 must not load until a visitor chooses Accept. The decision persists in browser storage, and visitors may reopen preferences using the footer. Declining after acceptance disables collection and reloads the website. Preview and localhost remain tracking-disabled regardless of choice.
 
 Production checklist:
-- Confirm the published privacy contact method and retention wording. The portal currently identifies the operator as Independent Civic Initiative but does not include an operator contact address.
+- The operator approved the public contact budget.transparency.portal4700@gmail.com; check that it appears in the portal footer and About privacy notice. Review the GA4 property retention setting and disclosure wording before release.
 - Keep GA4 automatic Site search and history-based Page views disabled.
 - Review and preferably disable automatic Outbound clicks and any other Enhanced Measurement events that could reveal query strings or full document URLs. Our custom events deliberately omit those values.
 - Validate protected Preview in a real browser: accepting must not load a GA4 script or send collect requests.
