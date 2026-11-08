@@ -13,6 +13,10 @@
       "destination": "/about/index.html"
     },
     {
+      "source": "/projects/:dataset/:id",
+      "destination": "/projects/:dataset/:id/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
