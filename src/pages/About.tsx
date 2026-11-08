@@ -60,9 +60,10 @@ export default function About() {
           See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a>.
         </p>
         <p className="fine">
-          For privacy questions or data-rights requests, an operator contact channel must be
-          published before live analytics is enabled. Do not submit personal information in
-          public project repositories.
+          For privacy inquiries and data-rights requests, contact this independent portal's administrator
+          at <a href="mailto:budget.transparency.portal4700@gmail.com">budget.transparency.portal4700@gmail.com</a>.
+          This is not an official website of the Provincial Government of Sorsogon or any government agency.
+          Do not submit personal information in public project repositories.
         </p>
       </section>
     </main>
