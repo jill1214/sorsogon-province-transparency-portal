@@ -7,6 +7,7 @@ import { Await, Disclaimers, ReasonTags, StatusChip } from '../components/Bits';
 import { PageHead } from '../components/Chrome';
 import OfficesSection from '../components/OfficesSection';
 import { projectsCsv, downloadText } from '../lib/csv';
+import { trackEvent } from '../lib/analytics';
 import { count, php, phpDelta, plural } from '../lib/format';
 import { usePortal } from '../lib/portal-context';
 import { summarise, type ScopedProject, type ScopeResult, type Summary } from '../lib/scope';
@@ -85,6 +86,7 @@ function Projects({ scope, datasets }: { scope: ScopeResult; datasets: DatasetIn
     else next.delete(key);
     setParams(next, { replace: true });
     setShown(PAGE);
+    if (key !== 'q') trackEvent('filter_projects', { section: 'fy2027', filter_type: key });
   };
 
   // DPWH offices among the rows, largest first, for the Office filter.
@@ -171,7 +173,7 @@ function Projects({ scope, datasets }: { scope: ScopeResult; datasets: DatasetIn
         <div className="toolbar">
           <label className="field field-grow">
             <span className="label">Search</span>
-            <input type="search" value={q} placeholder="Barangay, road, school, office…" onChange={(e) => setParam('q', e.target.value)} />
+            <input type="search" value={q} placeholder="Barangay, road, school, office…" onChange={(e) => setParam('q', e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && q.trim()) trackEvent('search', { section: 'fy2027' }); }} />
           </label>
           <label className="field">
             <span className="label">Program</span>
