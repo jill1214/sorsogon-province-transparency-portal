@@ -55,6 +55,7 @@ export function startAnalytics(): boolean {
   w[`ga-disable-${MEASUREMENT_ID}`] = false;
   w.dataLayer = w.dataLayer || [];
   // Use the documented gtag.js Arguments object command queue.
+  // eslint-disable-next-line prefer-rest-params -- gtag.js requires the original Arguments object.
   w.gtag = function gtag() { w.dataLayer!.push(arguments); };
   command('js', new Date());
   // Disable advertising enrichment and automatic initial page view.
