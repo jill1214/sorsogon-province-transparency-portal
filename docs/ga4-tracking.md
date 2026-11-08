@@ -40,3 +40,18 @@ Do not mark these as conversions/key events without a specific reporting objecti
 5. Ensure notices/privacy disclosure are appropriate for analytics collection before Production release. Monitor tag consent requirements and local privacy policy.
 
 The tag is inserted only after React starts on the exact public host. Static SEO HTML remains crawlable and unaffected.
+
+
+## Visitor permission and deployment prerequisites
+
+The website now includes an optional analytics accept/decline control and a privacy section at `/about#analytics-privacy`. GA4 must not load until a visitor chooses Accept. The decision persists in browser storage, and visitors may reopen preferences using the footer. Declining after acceptance disables collection and reloads the website. Preview and localhost remain tracking-disabled regardless of choice.
+
+Production checklist:
+- Confirm the published privacy contact method and retention wording. The portal currently identifies the operator as Independent Civic Initiative but does not include an operator contact address.
+- Keep GA4 automatic Site search and history-based Page views disabled.
+- Review and preferably disable automatic Outbound clicks and any other Enhanced Measurement events that could reveal query strings or full document URLs. Our custom events deliberately omit those values.
+- Validate protected Preview in a real browser: accepting must not load a GA4 script or send collect requests.
+- With separate authorization for Production, verify no analytics before consent, no analytics after decline, exactly one page view per pathname navigation after acceptance, and no sensitive search query parameters sent.
+- Run the existing CI and check preservation of BetterGov attribution, original disclaimers, and SEO static pages.
+
+Unit tests prove logic and compile behavior, not complete browser-level privacy protection. Do not merge or release until the remaining verification and operator contact questions are resolved.
