@@ -58,3 +58,50 @@ test('tag initialization is blocked when permission is absent, declined, or in P
     else Reflect.deleteProperty(globalThis, 'window');
   }
 });
+
+test('tag initialization uses Google\'s arguments queue after consent on Production', async () => {
+  const { startAnalytics, trackPage, MEASUREMENT_ID, PRODUCTION_HOST } = await import('../src/lib/analytics');
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const previousDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  const inserted: Array<{ async: boolean; src: string }> = [];
+  const storage = new Map([['spt-analytics-consent-v1', 'accepted']]);
+  const fakeWindow = {
+    location: { hostname: PRODUCTION_HOST, origin: 'https://' + PRODUCTION_HOST, pathname: '/', search: '?q=private' },
+    localStorage: { getItem: (key: string) => storage.get(key) ?? null },
+  };
+  const fakeDocument = {
+    title: 'Sorsogon Province Portal',
+    referrer: '',
+    head: { appendChild: (element: { async: boolean; src: string }) => inserted.push(element) },
+    createElement: (tag: string) => {
+      assert.equal(tag, 'script');
+      return { async: false, src: '' };
+    },
+  };
+  try {
+    Object.defineProperty(globalThis, 'window', { configurable: true, value: fakeWindow });
+    Object.defineProperty(globalThis, 'document', { configurable: true, value: fakeDocument });
+    assert.equal(startAnalytics(), true);
+    const queued = (fakeWindow as typeof fakeWindow & { dataLayer: IArguments[] }).dataLayer;
+    assert.equal(queued.length, 3);
+    for (const item of queued) {
+      assert.equal(Object.prototype.toString.call(item), '[object Arguments]');
+    }
+    assert.deepEqual(Array.from(queued[0]).slice(0, 1), ['js']);
+    assert.equal(queued[2][0], 'config');
+    assert.equal(queued[2][1], MEASUREMENT_ID);
+    assert.equal((queued[2][2] as { send_page_view: boolean }).send_page_view, false);
+    assert.equal(inserted.length, 1);
+    assert.equal(inserted[0].src, 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID);
+    trackPage('/?q=private', 'Portal homepage');
+    const events = queued.filter((item) => item[0] === 'event');
+    assert.equal(events.length, 1);
+    assert.equal(events[0][1], 'page_view');
+    assert.equal((events[0][2] as { page_location: string }).page_location, 'https://' + PRODUCTION_HOST + '/');
+  } finally {
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+    if (previousDocument) Object.defineProperty(globalThis, 'document', previousDocument);
+    else Reflect.deleteProperty(globalThis, 'document');
+  }
+});

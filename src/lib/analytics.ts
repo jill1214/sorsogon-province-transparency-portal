@@ -39,7 +39,7 @@ export function safePagePath(pathname: string): string {
 }
 
 type Gtag = (...args: unknown[]) => void;
-type AnalyticsWindow = Window & { dataLayer?: unknown[][]; gtag?: Gtag; [key: `ga-disable-${string}`]: boolean | undefined };
+type AnalyticsWindow = Window & { dataLayer?: (IArguments | unknown[])[]; gtag?: Gtag; [key: `ga-disable-${string}`]: boolean | undefined };
 let started = false;
 
 function command(...args: unknown[]) {
@@ -54,7 +54,9 @@ export function startAnalytics(): boolean {
   const w = window as unknown as AnalyticsWindow;
   w[`ga-disable-${MEASUREMENT_ID}`] = false;
   w.dataLayer = w.dataLayer || [];
-  w.gtag = (...args: unknown[]) => { w.dataLayer!.push(args); };
+  // Use the documented gtag.js Arguments object command queue.
+  // eslint-disable-next-line prefer-rest-params -- gtag.js requires the original Arguments object.
+  w.gtag = function gtag() { w.dataLayer!.push(arguments); };
   command('js', new Date());
   // Disable advertising enrichment and automatic initial page view.
   // Manually emit clean path-only page views on SPA route changes.
