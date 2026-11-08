@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { KIND_LABELS, shortNameOf } from '../config';
 import { usePortal } from '../lib/portal-context';
 import { date } from '../lib/format';
-import { NATIONAL_URL, SOURCE_CODE_URL } from '../lib/links';
+import { NATIONAL_URL, SOURCE_CODE_URL, SORSOGON_SOURCE_URL } from '../lib/links';
 
 const BETTERGOV_LOGO = '/brand/bettergov-horizontal-primary.png';
 
@@ -125,6 +125,10 @@ export function Footer() {
           <li>
             <span className="label">Open source</span>
             <a href={SOURCE_CODE_URL} target="_blank" rel="noopener">Fork this portal for your LGU or DPWH office ↗</a>
+          </li>
+          <li>
+            <span className="label">Sorsogon source code</span>
+            <a href={SORSOGON_SOURCE_URL} target="_blank" rel="noopener">View this independent local adaptation ↗</a>
           </li>
         </ul>
       </div>

@@ -24,7 +24,8 @@ const READING_RULES = [
 
 export default function About() {
   const { scope, overview, config } = usePortal();
-  useTitle(`About the data · ${shortNameOf(config)}`);
+  useTitle(`About the data · ${shortNameOf(config)}`,
+    'Learn how this independent Sorsogon Province budget portal selects records, cites BetterGov.PH, and explains geographic and spending limitations.');
   return (
     <main className="page main">
       <Await state={scope} what="the portal’s queries">

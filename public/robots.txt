@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sorsogon-province-transparency-portal.vercel.app/sitemap.xml

@@ -58,7 +58,8 @@ function ProjectView({ env }: { env: Envelope<ProjectDetail> }) {
   const { config, overview, scope, client } = usePortal();
   const location = useLocation();
   const p = env.data;
-  useTitle(`${p.title} · ${shortNameOf(config)}`);
+  useTitle(`${p.title} · ${shortNameOf(config)}`,
+    `${p.title}. Inspect proposed FY2027 allocations and original document references. These figures are proposed appropriations, not actual spending.`);
 
   const ov = overview.status === 'ready' ? overview.value.data : null;
   const program = ov?.datasets.find((d) => d.key === p.dataset);

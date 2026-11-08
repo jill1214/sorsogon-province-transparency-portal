@@ -28,7 +28,7 @@ Current Vercel project ID: `prj_a6GKbOUIM2tjxTMdLphgRKycFwKE`; Vercel project na
 
 Vercel gives each release an immutable hash URL such as `<project>-<hash>-amabini.vercel.app`; do not use that as the long-term public website link. The alias ending `sorsogon-province-transparency-portal-amabini.vercel.app` is stable between releases, but it currently returns `X-Robots-Tag: noindex` and is not listed as a configured project domain.
 
-The project currently lists `sorsogon-province-portal-preview.vercel.app` as its sole verified **project domain**. Despite its historical `preview` name, it serves the latest Production deployment and currently does **not** return `noindex`. This suggests the header is platform-generated for noncanonical deployment aliases, not an application header. **Do not change domains until approved**. Recommended improvement is to assign an available, clearly named Production domain in Vercel project settings and verify that its response omits `noindex`; then update any canonical/meta `siteUrl` configuration via separate reviewed code change. Preserve the existing working alias until the replacement is verified.
+The public project domain `sorsogon-province-transparency-portal.vercel.app` was verified in Vercel on 2026-11-08. Use it as the canonical Production host. Other historical aliases may exist, but should not be assigned canonical status. Check response indexing headers on each release and ensure protected Preview URLs are not indexed. Domain or hosted settings changes need separate approval.
 
 ## Guardrails and constraints
 

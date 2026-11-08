@@ -24,7 +24,8 @@ const SORTS: Record<Sort, { label: string; cmp: (a: ScopedProject, b: ScopedProj
 
 export default function Home() {
   const { scope, overview, config } = usePortal();
-  useTitle(`Every FY 2027 project · ${shortNameOf(config)}`);
+  useTitle(`Every FY 2027 project · ${shortNameOf(config)}`,
+    'Explore Sorsogon Province FY2027 proposed budget projects, compare NEP and House bill allocations, and inspect source references. These figures are not actual spending.');
   const datasets = overview.status === 'ready' ? overview.value.data.datasets : [];
   return (
     <main className="page main">

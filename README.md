@@ -15,10 +15,10 @@ This repository is a Sorsogon-specific fork of [BetterGov.PH's transparency-port
 
 ## Development and validation
 
-The configuration is being reviewed on branch `configure-sorsogon-province`. The `main` branch remains unchanged until a separately approved merge.
+The Sorsogon Province portal is publicly available at https://sorsogon-province-transparency-portal.vercel.app/. Changes are reviewed on separate branches and merged to `main` only after approval. The GitHub and Production commit SHAs may differ because Production deployments require separate approval.
 
 ```bash
-git clone -b configure-sorsogon-province https://github.com/jill1214/sorsogon-province-transparency-portal.git
+git clone https://github.com/jill1214/sorsogon-province-transparency-portal.git
 cd sorsogon-province-transparency-portal
 npm ci
 npm run test:csv
@@ -28,7 +28,13 @@ npm run build
 npm run dev
 ```
 
-The build requires Node.js 22. A protected Vercel Preview is available for authorized review; a public production deployment has not been approved.
+The project targets Node.js 22 for local builds and GitHub Actions. The stored Vercel Node version differs and requires independent review before changing hosted settings. Vercel Preview is authenticated while Production is public. Deployments and hosted settings changes require separate approval.
+
+## SEO and crawling
+
+The public canonical host is `https://sorsogon-province-transparency-portal.vercel.app`. The build generates distinct initial HTML metadata for `/`, `/gaa`, and `/about`, plus `robots.txt` and a sitemap limited to those stable routes. Browser navigation updates canonical and social metadata, including loaded project pages. Project details and budget records still load from BetterGov.PH through client-side JavaScript: making all records available in initial HTML remains a separate, uncompleted task. A JavaScript-enabled crawler is not proof of static crawlability.
+
+The [Sorsogon implementation source](https://github.com/jill1214/sorsogon-province-transparency-portal) is separate from the [BetterGov.PH upstream starter](https://github.com/bettergovph/transparency-portal), whose license and attribution are preserved.
 
 ## Changes maintained in this fork
 
