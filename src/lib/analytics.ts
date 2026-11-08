@@ -43,7 +43,7 @@ type AnalyticsWindow = Window & { dataLayer?: unknown[][]; gtag?: Gtag; [key: `g
 let started = false;
 
 function command(...args: unknown[]) {
-  (window as AnalyticsWindow).gtag?.(...args);
+  (window as unknown as AnalyticsWindow).gtag?.(...args);
 }
 
 export function startAnalytics(): boolean {
@@ -51,7 +51,7 @@ export function startAnalytics(): boolean {
   if (started) return true;
   started = true;
 
-  const w = window as AnalyticsWindow;
+  const w = window as unknown as AnalyticsWindow;
   w[`ga-disable-${MEASUREMENT_ID}`] = false;
   w.dataLayer = w.dataLayer || [];
   w.gtag = (...args: unknown[]) => { w.dataLayer!.push(args); };
@@ -75,7 +75,7 @@ export function startAnalytics(): boolean {
 /** Stops hits in the current document; callers reload on revoking consent. */
 export function disableAnalytics() {
   if (typeof window === 'undefined') return;
-  (window as AnalyticsWindow)[`ga-disable-${MEASUREMENT_ID}`] = true;
+  (window as unknown as AnalyticsWindow)[`ga-disable-${MEASUREMENT_ID}`] = true;
   // Clear the GA cookies set on this host where accessible.
   for (const token of document.cookie.split(';')) {
     const name = token.trim().split('=')[0];
