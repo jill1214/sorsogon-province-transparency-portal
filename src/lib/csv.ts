@@ -4,6 +4,7 @@
  */
 import type { ScopedProject } from './scope';
 import { csvCell } from './csv-cell';
+import { trackEvent } from './analytics';
 
 const COLUMNS: [string, (p: ScopedProject) => string | number | null][] = [
   ['program', (p) => p.dataset],
@@ -32,6 +33,7 @@ export function projectsCsv(projects: readonly ScopedProject[]): string {
 }
 
 export function downloadText(filename: string, text: string, type = 'text/csv;charset=utf-8') {
+  trackEvent('download_csv', { section: filename.includes('-gaa-') ? 'enacted' : 'fy2027' });
   // A BOM so spreadsheet apps read the peso sign and accented names correctly.
   const blob = new Blob(['﻿', text], { type });
   const url = URL.createObjectURL(blob);
