@@ -39,6 +39,9 @@ jobs:
       - name: Test CSV formula protection and exports
         run: npm run test:csv
 
+      - name: Test GA4 Production isolation and URL sanitization
+        run: npm run test:analytics
+
       - name: Verify Sorsogon scope against live Budget API
         run: npm run check -- --verbose
 
