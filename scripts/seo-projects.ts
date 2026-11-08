@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import config from '../portal.config';
 import { createClient } from '../src/api/client';
 import { DEFAULT_API } from '../src/config';
-import { resolveScope, type ScopedProject } from '../src/lib/scope';
+import { resolveScope } from '../src/lib/scope';
 
 const origin = config.siteUrl?.replace(/\/+$/, '');
 if (!origin || !/^https:\/\/[^/]+$/.test(origin)) {
